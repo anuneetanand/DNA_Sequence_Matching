@@ -29,7 +29,13 @@ X = {
         'UGC':'C', 'UGU':'C', 'UGA':'*', 'UGG':'W', 
     } 
 
-I = open(sys.argv[1],"r")
+for i in range(len(argv)):
+    if argv[i] == '-i':
+        inputFile = argv[i+1]
+    elif argv[i] == '-o':
+        outputFile = argv[i+1]
+
+I = open(inputFile,"r")
 Data = I.readlines()
 I.close()
 
@@ -51,5 +57,5 @@ for i in range(0,len(RNA),3):
 
 print("Protein Sequence:",PS)
 
-O = open(sys.argv[2],"w")
+O = open(outputFile,"w")
 O.write(PS + "\n")
