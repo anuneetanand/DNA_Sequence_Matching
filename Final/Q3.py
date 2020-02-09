@@ -107,7 +107,6 @@ Trace_Back = [(x,y)]
 while ((x<L1-1) and (y<L2-1)):
    Trace_Back.append(Tuples[x][y])
    x,y = Tuples[x][y][0],Tuples[x][y][1]
-print(Trace_Back)
 # Generating Output
 
 Dot_Plot = ""
