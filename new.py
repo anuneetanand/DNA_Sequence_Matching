@@ -37,10 +37,14 @@ for i in range(len(First)):
          DM[i][j] = 1
 
 
-plt.imshow(numpy.array(DM))
+#plt.imshow(numpy.array(DM))
+for i in range(len(First)):
+   for j in range(len(Second)):
+      plt.plot([i,j])
 x_axis = plt.xticks(numpy.arange(len(list(Second))),list(Second))
 y_axis = plt.yticks(numpy.arange(len(list(First))),list(First))
-#plt.show()
+plt.title("Dot-Plot")
+plt.show()
 
 DP = copy.deepcopy(DM)
 R_max = len(First)
@@ -65,4 +69,7 @@ for R in range(len(First)-1,-1,-1):
 
       DP[R][C] += max(v1,v2,v3)
 
-
+plt.imshow(numpy.array(DP))
+x_axis = plt.xticks(numpy.arange(len(list(Second))),list(Second))
+y_axis = plt.yticks(numpy.arange(len(list(First))),list(First))
+plt.show()
