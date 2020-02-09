@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 """
 Aditya Singh Rathore : 2018007
@@ -27,10 +26,15 @@ for i in Lines:
 first = sequences[0]
 second = sequences[1]
 
-#first = "AYCYNRCKCRBP" #[example in slides]
-#second ="ABCNYRQCLCRPM" #[example in slides]
-first = "rADITYA"
-second = "ADITYA"
+#first = "MAPWMHLLTVLALLALWGPNSVQAYSSQHLCGSNLVEALYMTCGRSGFYRPHDRRELEDL"
+#second = "MALLVHFLPLLALLALWEPKPTQAFVKQHLCGPHLVEALYLVCGERGFFYTPKSRREVED"
+
+#first = "rADITYA"
+#second = "ADITYA"
+
+first = "AYCYNRCKCRBP" #[example in slides]
+second ="ABCNYRQCLCRPM"
+
 opt = numpy.zeros([len(first), len(second)], dtype = int)
 
 
@@ -84,9 +88,6 @@ v2 = cell(R+1,C+2 to C_max)
 v3 = cell(R+2 to R_max,C+2)
 """
 
-C_max = len(second)
-R_max = len(first)
-
 tuples = []
 
 for i in range(len(first)):
@@ -96,6 +97,9 @@ for i in range(len(first)):
    tuples.append(l)
 maxTup = (0,0)
 maxValue = 0
+
+C_max = len(second)
+R_max = len(first)
 
 for i in range(len(first)-1,-1,-1):
    for j in range(len(second)-1,-1,-1):
@@ -182,16 +186,52 @@ while ((x<(len(first)-1)) and ((y<len(second)-1))):
    y = tempTuple[1]
 
 
+x = 0
+y = 0
+
+str1 = ""
+str2 = ""
+
 while(len(traceBack)>0):
    tempTup = traceBack.pop(0)
-   alignment += "first sequence index = "+str(tempTup[0])+"   second sequence index = "+str(tempTup[1])+"\n"
+   print(str(tempTup[0])+","+str(tempTup[1]))
+   while (x<(tempTup[0]) or y<(tempTup[1])):
+      if (x<tempTup[0]):
+         str1 += first[x]
+         x+=1
+      else:
+         str1 += "-"
 
+      if (y<tempTup[1]):
+         str2+= second[y]
+         y+=1
+      else:
+         str2+="-"
+
+while ((x<len(first)) or (y<len(second))):
+   if (x<len(first)):
+      str1+=first[x]
+      x+=1
+   else:
+      str1+="-"
+
+   if(y<len(second)):
+      str2+=second[y]
+      y+=1
+   else:
+      str2+="-"
+
+
+alignment += str1 + "\n"
+alignment += str2 + "\n"
 
 alignment+="\n"
 
 print(dotPlot)
 print(sumMatrix)
 print(alignment)
+print("Length of first = "+str(len(first)))
+print("Length of second = "+str(len(second)))
 responseCorrect = False
 while not responseCorrect:
    print("Do you want image of the dot plot ? (y or n)")
