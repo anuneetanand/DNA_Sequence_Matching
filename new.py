@@ -153,24 +153,33 @@ while ((x<(L1-1)) and ((y<L2-1))):
 
 i = 0
 j = 0
+F = list(First)
+S = list(Second)
 
 while len(Trace_Back)>0:
    T = Trace_Back.pop(0)
    print(T)
-   A = max(T[0]-T[1],0)
-   B = max(T[1]-T[0],0)
-   Seq_1 += "_" * A
-   Seq_2 += "_" * B
-   i += A
-   j += B
-   if i<L1:
-      Seq_1 += First[i]
-   if j<L2:
-      Seq_2 += Second[j]
-   i += 1
-   j += 1
+   print(i,j)
+   if j==T[1]:
+      Seq_1 += F.pop(0)
+   else:
+      Seq_1 += "_" * (T[1]-j)
+      j = T[1]
+   if i==T[0]:
+      Seq_2 += S.pop(0)
+   else:
+      Seq_2 += "_" * (T[0]-i)
+      i = T[0]
+   print(Seq_1,Seq_2)
+   i +=1
+   j +=1
 
-print(Seq_1)
-print(Seq_2)
+
+
+print(First,"",Seq_1)
+print(Second,Seq_2)
+
+# AYCYN_R_CKCRBP
+# ABC_NYRQCLCR_PM
 
 #print(Alignment)
