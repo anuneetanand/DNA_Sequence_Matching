@@ -30,8 +30,9 @@ for Line in Data:
 
 First = Sequences[0]
 Second = Sequences[1]
-First = "AYCYNRCKCRBP" #[example in slides]
-Second = "ABCNYRQCLCRPM" #[example in slides]
+#First = "AYCYNRCKCRBP" #[example in slides]
+#Second = "ABCNYRQCLCRPM" #[example in slides]
+
 
 L1 = len(First)
 L2 = len(Second)
@@ -85,7 +86,7 @@ for R in range(L1-1,-1,-1):
                   Max_Value = v2
                   Max_Tuple = (R+1,k)
 
-      if (R+2<R_max) and (C+2<C_max):
+      if (R+2<R_max) and (C+1<C_max):
          temp = (R+2,C+1)
          for k in range(R+2,R_max):
             v3 = DP[k][C+1]
@@ -166,46 +167,44 @@ Alignment += "                                  / ___ \| | | (_| | | | | | | | |
 Alignment += "                                 /_/   \_\_|_|\__, |_| |_|_| |_| |_|\___|_| |_|\__|          \n"
 Alignment += "                                               |___/                                          \n\n\n"
 
-
-
 x = 0
 y = 0
-
-str1 = ""
-str2 = ""
+Seq1 = ""
+Seq2 = ""
 while(len(Trace_Back)>0):
-   tempTup = Trace_Back.pop(0)
-   print(str(tempTup[0])+","+str(tempTup[1]))
-   while (x<(tempTup[0]) or y<(tempTup[1])):
-      if (x<tempTup[0]):
-         str1 += First[x]
+   T = Trace_Back.pop(0)
+   while (x<(T[0]) or y<(T[1])):
+      if (x<T[0]):
+         Seq1 += First[x]
          x+=1
       else:
-         str1 += "-"
+         Seq1 += "-"
 
-      if (y<tempTup[1]):
-         str2+= Second[y]
+      if (y<T[1]):
+         Seq2+= Second[y]
          y+=1
       else:
-         str2+="-"
+         Seq2+="-"
 
-while ((x<len(First)) or (y<len(Second))):
-   if (x<len(First)):
-      str1+=First[x]
+while (x<L1) or (y<L2):
+   if x<L1:
+      Seq1+=First[x]
       x+=1
    else:
-      str1+="-"
+      Seq1+="-"
 
-   if(y<len(Second)):
-      str2+=Second[y]
+   if y<L2:
+      Seq2+=Second[y]
       y+=1
    else:
-      str2+="-"
+      Seq2+="-"
 
 
-Alignment += str1 + "\n"
-Alignment += str2 + "\n"
+Alignment += Seq1 + "\n"
+Alignment += Seq2 + "\n"
 Alignment+="\n"
-#print(Dot_Plot)
+
+
+print(Dot_Plot)
 print(Sum_Matrix)
 print(Alignment)
