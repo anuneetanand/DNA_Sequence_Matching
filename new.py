@@ -26,8 +26,8 @@ for Line in Data:
 First = Sequences[0]
 Second = Sequences[1]
 
-First = "AYCYNRCKCRBP" #[example in slides]
-Second = "ABCNYRQCLCRPM" #[example in slides]
+#First = "AYCYNRCKCRBP" #[example in slides]
+#Second = "ABCNYRQCLCRPM" #[example in slides]
 
 DM = numpy.zeros([len(First), len(Second)], dtype = int)
 
@@ -36,14 +36,22 @@ for i in range(len(First)):
       if (First[i] == Second[j]):
          DM[i][j] = 1
 
-
 #plt.imshow(numpy.array(DM))
+DotPlotX = []
+DotPlotY = []
 for i in range(len(First)):
    for j in range(len(Second)):
-      plt.plot([i,j])
-x_axis = plt.xticks(numpy.arange(len(list(Second))),list(Second))
-y_axis = plt.yticks(numpy.arange(len(list(First))),list(First))
+      if DM[i][j]==1:
+         DotPlotX.append(i)
+         DotPlotY.append(j)
+
 plt.title("Dot-Plot")
+plt.scatter(DotPlotX,DotPlotY)
+plt.xlabel("Sequence - 1")
+plt.ylabel("Sequence - 2")
+plt.xticks(numpy.arange(len(list(First))),list(First))
+plt.yticks(numpy.arange(len(list(Second))),list(Second))
+#plt.autoscale(enable=True, tight=True)
 plt.show()
 
 DP = copy.deepcopy(DM)
