@@ -219,8 +219,8 @@ Alignment+="\n"
 O = open(outputFile,"w")
 O.write(Dot_Plot)
 O.write(Sum_Matrix)
-O.write("Score: "+str(End_Value)+"\n\n")
 O.write(Alignment)
+O.write("Score: "+str(End_Value)+"\n\n")
 
 # Printing On Terminal
 print(Dot_Plot)
