@@ -14,8 +14,8 @@ import numpy
 import copy
 import sys
 
-inputFile = "protein.fa"
-
+inputFile = "protein.fa" #Default File expected
+outputFile = "q3.out" #Default output File
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
@@ -32,9 +32,6 @@ for Line in Data:
 
 First = Sequences[0]
 Second = Sequences[1]
-#First = "AYCYNRCKCRBP" #[example in slides]
-#Second = "ABCNYRQCLCRPM" #[example in slides]
-
 
 L1 = len(First)
 L2 = len(Second)
@@ -60,7 +57,6 @@ plt.xlabel("Sequence - 1")
 plt.ylabel("Sequence - 2")
 plt.xticks(numpy.arange(len(list(First))),list(First))
 plt.yticks(numpy.arange(len(list(Second))),list(Second))
-#plt.show()
 
 DP = copy.deepcopy(DM)
 R_max = L1
@@ -107,7 +103,7 @@ Trace_Back = [(x,y)]
 while ((x<L1-1) and (y<L2-1)):
    Trace_Back.append(Tuples[x][y])
    x,y = Tuples[x][y][0],Tuples[x][y][1]
-# Generating Output
+
 
 Dot_Plot = ""
 Dot_Plot += ("                                         ____        _           ____  _       _                        \n")   
@@ -141,7 +137,7 @@ Sum_Matrix = ""
 Sum_Matrix += "                                     ____                         __  __       _        _                \n"
 Sum_Matrix += "                                    / ___| _   _ _ __ ___        |  \/  | __ _| |_ _ __(_)_  __          \n"
 Sum_Matrix += "                                    \___ \| | | | '_ ` _ \       | |\/| |/ _` | __| '__| \ \/ /          \n"
-Sum_Matrix += "                                     __) | |_| | | | | | |       | |  | | (_| | |_| |  | |>  <           \n"
+Sum_Matrix += "                                     __) ||_| | | | | || |       | |  | | (_| | |_| |  | |>  <           \n"
 Sum_Matrix += "                                    |____/ \__,_|_| |_||_|       |_|  |_|\__,_|\__|_|  |_/_/\_\          "+"\n\n\n"
 Sum_Matrix += (" | ")
 
@@ -205,13 +201,10 @@ Alignment += Seq1 + "\n"
 Alignment += Seq2 + "\n"
 Alignment+="\n"
 
-
-print(Dot_Plot)
-print(Sum_Matrix)
-print(Alignment)
+print("OUTPUT ALSO DUMPED IN this file-> "+str(outputFile))
 
 outputPtr = open(outputFile, 'w')
-outputPtr.write(Alignment)
+outputPtr.write(Alignment+Sum_Matrix+Dot_Plot)
 outputPtr.close()
 I.close()
 plt.show()
