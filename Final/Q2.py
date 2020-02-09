@@ -11,10 +11,13 @@ Divyam Gupta         : 2018032
 
 import sys
 
+inputFile = "1ifp.pdb"
+outputFile = "Output.txt"
+
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
-    elif sys.argv[i] == '-o':
+    if sys.argv[i] == '-o':
         outputFile = sys.argv[i+1]
 
 I = open(inputFile,"r")
