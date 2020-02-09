@@ -34,9 +34,9 @@ Data = I.readlines()
 I.close()
 
 DNA = ""
-for L in Data:
-	if L[0]!=">":
-		DNA = DNA + L
+for Line in Data:
+	if Line[0]!=">":
+		DNA = DNA + Line
 
 DNA = DNA.replace("\n","")
 print("DNA:",DNA)
