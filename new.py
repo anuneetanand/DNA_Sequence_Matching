@@ -15,7 +15,13 @@ import numpy
 import copy
 import sys
 
-I = open(sys.argv[1], 'r')
+for i in range(len(sys.argv)):
+    if sys.argv[i] == '-i':
+        inputFile = sys.argv[i+1]
+    elif sys.argv[i] == '-o':
+        outputFile = sys.argv[i+1]
+
+I = open(inputFile, 'r')
 Data = I.readlines()
 Sequences = [] 
 

@@ -29,11 +29,11 @@ X = {
         'UGC':'C', 'UGU':'C', 'UGA':'*', 'UGG':'W', 
     } 
 
-for i in range(len(argv)):
-    if argv[i] == '-i':
-        inputFile = argv[i+1]
-    elif argv[i] == '-o':
-        outputFile = argv[i+1]
+for i in range(len(sys.argv)):
+    if sys.argv[i] == '-i':
+        inputFile = sys.argv[i+1]
+    elif sys.argv[i] == '-o':
+        outputFile = sys.argv[i+1]
 
 I = open(inputFile,"r")
 Data = I.readlines()
