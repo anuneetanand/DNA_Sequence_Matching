@@ -45,17 +45,17 @@ for Line in Data:
 		DNA = DNA + Line
 
 DNA = DNA.replace("\n","")
-print("DNA:",DNA)
+print("\nDNA :",DNA)
 
 RNA = DNA.replace("T","U")
-print("RNA:",RNA)
+print("\nRNA :",RNA)
 
 PS = ""
 
 for i in range(0,len(RNA),3):
 	PS = PS + X[RNA[i:i+3]]
 
-print("Protein Sequence:",PS)
+print("\nProtein Sequence :",PS,"\n")
 
 O = open(outputFile,"w")
 O.write(PS + "\n")

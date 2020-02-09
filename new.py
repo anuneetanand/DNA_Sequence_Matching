@@ -9,7 +9,6 @@ Anuneet Anand        : 2018022
 Divyam Gupta         : 2018032
 
 """
-
 import matplotlib.pyplot as plt
 import numpy
 import copy
@@ -31,10 +30,9 @@ for Line in Data:
 
 First = Sequences[0]
 Second = Sequences[1]
-First = "AYCYNRCKCRBP" #[example in slides]
-Second = "ABCNYRQCLCRPM" #[example in slides]
-#First = "rADITYA"
-#Second = "ADITYA"
+#First = "AYCYNRCKCRBP" #[example in slides]
+#Second = "ABCNYRQCLCRPM" #[example in slides]
+
 L1 = len(First)
 L2 = len(Second)
 
@@ -45,17 +43,16 @@ for i in range(L1):
       if (First[i] == Second[j]):
          DM[i][j] = 1
 
-#plt.imshow(numpy.array(DM))
-DotPlotX = []
-DotPlotY = []
+Dot_PlotX = []
+Dot_PlotY = []
 for i in range(L1):
    for j in range(L2):
       if DM[i][j]==1:
-         DotPlotX.append(i)
-         DotPlotY.append(j)
+         Dot_PlotX.append(i)
+         Dot_PlotY.append(j)
 
 plt.title("Dot-Plot")
-plt.scatter(DotPlotX,DotPlotY)
+plt.scatter(Dot_PlotX,Dot_PlotY)
 plt.xlabel("Sequence - 1")
 plt.ylabel("Sequence - 2")
 plt.xticks(numpy.arange(len(list(First))),list(First))
@@ -117,27 +114,6 @@ for R in range(L1-1,-1,-1):
          Max_Value_At = (R,C)
          Max_Value = DP[R][C]
 
-Axis_Spacing = len(str(Max_Value))
-Sum_Matrix = ""
-Sum_Matrix += (" | ")
-
-for i in Second:
-   Sum_Matrix += str(i) + " "*Axis_Spacing
-Sum_Matrix += "\n"
-Sum_Matrix += ('-'*(2 + L2*(Axis_Spacing+1)))
-Sum_Matrix += "\n"
-
-for i in range(L1):
-   Row = First[i]
-   Row = Row + "| "
-   for j in range(L2):
-      Element_Spacing = Axis_Spacing - len(str(DP[i][j])) + 1
-      Row += str(DP[i][j]) + " " * Element_Spacing
-   Sum_Matrix += (Row)+"\n"
-Sum_Matrix += "\n\n\n"
-
-#print(Sum_Matrix)
-
 Seq_1 = ""
 Seq_2 = ""
 
@@ -158,8 +134,6 @@ S = list(Second)
 
 while len(Trace_Back)>0:
    T = Trace_Back.pop(0)
-   print(T)
-   print(i,j)
    if j==T[1]:
       Seq_1 += F.pop(0)
    else:
@@ -170,16 +144,72 @@ while len(Trace_Back)>0:
    else:
       Seq_2 += "_" * (T[0]-i)
       i = T[0]
-   print(Seq_1,Seq_2)
    i +=1
    j +=1
 
 
+# Generating Output
 
-print(First,"",Seq_1)
-print(Second,Seq_2)
+Dot_Plot = ""
+Dot_Plot += ("                                         ____        _           ____  _       _                        \n")   
+Dot_Plot += ("                                        |  _ \  ___ | |_        |  _ \| | ___ | |_                      \n") 
+Dot_Plot += ("                                        | | | |/ _ \| __|       | |_) | |/ _ \| __|                     \n")
+Dot_Plot += ("                                        | |_| | (_) | |___      |  __/| | (_) | |_                      \n")
+Dot_Plot += ("                                        |____/ \___/ \____|     |_|   |_|\___/ \__|                     \n\n\n")
+Dot_Plot +=("\n")
+Dot_Plot += (" |")
+for i in Second:
+   Dot_Plot += i+" "
+Dot_Plot += "\n"
+Dot_Plot += ('-'*(2 + 2*len(Second)))
+Dot_Plot += "\n"
 
-# AYCYN_R_CKCRBP
-# ABC_NYRQCLCR_PM
+j = 0
+for i in First:
+   row = i
+   row = row + "|"
+   for k in DM[j]:
+      if (k == 1):
+         row = row + "*"+" "
+      else :
+         row = row + " "+" "
+   Dot_Plot += (row)+"\n"
+   j+=1
+Dot_Plot += "\n\n\n"
 
-#print(Alignment)
+Axis_Spacing = len(str(Max_Value))
+Sum_Matrix = ""
+Sum_Matrix += "                                     ____                         __  __       _        _                \n"
+Sum_Matrix += "                                    / ___| _   _ _ __ ___        |  \/  | __ _| |_ _ __(_)_  __          \n"
+Sum_Matrix += "                                    \___ \| | | | '_ ` _ \       | |\/| |/ _` | __| '__| \ \/ /          \n"
+Sum_Matrix += "                                     __) | |_| | | | | | |       | |  | | (_| | |_| |  | |>  <           \n"
+Sum_Matrix += "                                    |____/ \__,_|_| |_||_|       |_|  |_|\__,_|\__|_|  |_/_/\_\          "+"\n\n\n"
+Sum_Matrix += (" | ")
+
+for i in Second:
+   Sum_Matrix += str(i) + " "*Axis_Spacing
+Sum_Matrix += "\n"
+Sum_Matrix += ('-'*(2 + L2*(Axis_Spacing+1)))
+Sum_Matrix += "\n"
+
+for i in range(L1):
+   Row = First[i]
+   Row = Row + "| "
+   for j in range(L2):
+      Element_Spacing = Axis_Spacing - len(str(DP[i][j])) + 1
+      Row += str(DP[i][j]) + " " * Element_Spacing
+   Sum_Matrix += (Row)+"\n"
+Sum_Matrix += "\n\n\n"
+
+Alignment = ""
+Alignment += "                                     _    _ _                                  _             \n"
+Alignment += "                                    / \  | (_) __ _ _ __  _ __ ___   ___ _ __ | |_           \n"
+Alignment += "                                   / _ \ | | |/ _` | '_ \| '_ ` _ \ / _ \ '_ \| __|          \n"
+Alignment += "                                  / ___ \| | | (_| | | | | | | | | |  __/ | | | |_           \n"
+Alignment += "                                 /_/   \_\_|_|\__, |_| |_|_| |_| |_|\___|_| |_|\__|          \n"
+Alignment += "                                               |___/                                          \n\n\n"
+
+
+print(Dot_Plot)
+print(Sum_Matrix)
+print(Alignment)
