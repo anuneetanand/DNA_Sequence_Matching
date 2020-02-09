@@ -37,7 +37,7 @@ for i in range(len(sys.argv)):
         inputFile = sys.argv[i+1]
     if sys.argv[i] == '-o':
         outputFile = sys.argv[i+1]
-
+print("READING FROM this file ->"+str(inputFile))
 I = open(inputFile,"r")
 Data = I.readlines()
 I.close()
@@ -65,7 +65,7 @@ for i in range(0,len(RNA),3):
 	PS = PS + X[RNA[i:i+3]]
 
 print("\nProtein Sequence :",PS,"\n")
-
+print("OUTPUT DUMPED IN this file ->"+str(outputFile))
 O = open(outputFile,"w")
 O.write(Header+"\n")
 O.write(PS + "\n")
