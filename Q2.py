@@ -1,65 +1,53 @@
-# Group 7
-# Aditya Singh Rathore (2018007)
-# Anuneet Anand (2018022)
-# Divyam Gupta (2018032)
-# IQB - A1 - Q2
+# -*- coding: utf-8 -*-
+"""
+      IQB, Winter 2020
+      Assignment-1
+      Question-2
+Aditya Singh Rathore : 2018007
+Anuneet Anand        : 2018022
+Divyam Gupta         : 2018032
+
+"""
 
 import sys
 
-argv = sys.argv
+I = open(sys.argv[1],"r")
+Data = I.readlines()
+I.close()
 
-inputFile = ''
-outputFile = ''
+HEADER = ""
+TITLE = ""
+RESOLUTION = ""
 
-for i in range(len(argv)):
-    if argv[i] == '-i':
-        inputFile = argv[i+1]
-    elif argv[i] == '-o':
-        outputFile = argv[i+1]
+for L in Data:
 
-inputPtr = open('1ifp.pdb')
+	if "HEADER" in L:
+		X = L.split()
+		for i in X[1:]:
+			HEADER = HEADER + i + " "
 
-lines = inputPtr.readlines()
+	if "TITLE" in L:
+		X = L.split()
+		if TITLE == "":
+			for i in X[1:]:
+				TITLE = TITLE + i + " "
+		else:
+			for i in X[2:]:
+				TITLE = TITLE + i + " "
 
-title = ''
-resolution = ''
-header = ''
+	if "RESOLUTION." in L:
+		X = L.split()
+		x = X.index("RESOLUTION.")
+		if x!=len(X)-1:
+			RESOLUTION = X[x+1]
 
-for i in lines:
-    if(i.find('TITLE')>=0):
-        a = i.split(' ')
-        for j in a:
-            if((j!='TITLE' and ((j<='1' or j>='9')) and j!='' and j!='\n')):
-                title += j + ' '
-    if(i.find('REMARK') >=0):
-        a = i.split(' ')
-        if ('2' in a) and ('RESOLUTION.' in a):
-            j = 0
-            l = len(a)
-            for j in a:
-                if (j== 'REMARK' or j == '' or j =='2' or j == 'RESOLUTION.' or j == '\n'):
-                    continue
-                else:
-                    resolution+= j + ' '
-    if(i.find('HEADER') >=0):
-        a = i.split(' ')
-        for j in a:
-            if((j!='HEADER' and j!='' and j!='\n')):
-                try:
-                    checkNum = int(j)
-                except ValueError:
-                    header += j + ' '
-            
-print(title)
-print(resolution)
-print(header)
+HEADER = "HEADER: " + HEADER
+TITLE = "TITLE: " + TITLE
+RESOLUTION = "RESOLUTION: " + RESOLUTION
 
-if(outputFile!= ''):
-    try:
-        op = open(outputFile, 'x')
-    except FileExistsError:
-        op = open(outputFile, 'w')    
-    op.write('Header : ' + header + '\n')
-    op.write('Title : ' + title + '\n')
-    op.write('Resolution : ' + resolution + '\n')
+print(HEADER)
+print(TITLE)
+print(RESOLUTION)
 
+O = open(sys.argv[2],"w")
+O.write(HEADER + "\n" + TITLE + "\n" + RESOLUTION + "\n")
