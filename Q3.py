@@ -31,9 +31,6 @@ for i in Lines:
 first = sequences[0]
 second = sequences[1]
 
-#first = "AYCYNRCKCRBP" [example in slides]
-#second = "ABCNYRQCLCRPM" [example in slides]
-
 opt = numpy.zeros([len(first), len(second)], dtype = int)
 
 points = []
@@ -109,10 +106,52 @@ for i in range(len(first)-1,-1,-1):
       
       if ((R+2<R_max) and (C+2<C_max)):         
          for k in range(R+2,R_max):
-            v2 = max(v2,opt[k][C+1]) 
+            v3 = max(v3,opt[k][C+1]) 
 
       opt[R][C] += max(v1,v2,v3)
       
+r = len(first) -1
+c = len(second) -1
+i1 = len(first) - 1
+i2 = len(second) - 1
+align1 = ''
+align2 = ''
+
+while r>=1 and c>=1:
+   neighbourhood = [opt[r-1][c-1], opt[r-1][c], opt[r][c-1]]
+   maxReq = max(neighbourhood)
+   if(opt[r-1][c-1] == maxReq):
+      align1 = first[i1] + align1
+      align2 = second[i2] + align2
+      r-=1
+      c-=1
+      i1-=1
+      i2-=1
+      continue
+   elif(opt[r][c-1] == maxReq):
+      align1 = '-' + align1
+      align2 = second[i2] + align2
+      i2-=1
+      c-=1
+      continue
+   else:
+      align2 = '-' + align2
+      align1 = first[i1] + align1
+      i1-=1
+      r-=1
+
+if(r==1):
+   align1 = '-' + align1
+   align2 = second[i2] + align2
+if(c==1):
+   align2 = '-' + align2
+   align1 = first[i1] + align1
+
+if(i1>=0):
+   align1 = first[:i1+1] + align1
+if(i2>=0):
+   align2 = second[:i2+1] + align2
+
 
 sumMatrix = ""
 sumMatrix += "                            _____ _               ____                  __  __       _        _                \n"
@@ -146,12 +185,16 @@ alignment += "                           |_   _| |__   ___        / \  | (_) __ 
 alignment += "                             | | | '_ \ / _ \_____ / _ \ | | |/ _` | '_ \| '_ ` _ \ / _ \ '_ \| __|          \n"
 alignment += "                             | | | | | |  __/_____/ ___ \| | | (_| | | | | | | | | |  __/ | | | |_           \n"
 alignment += "                             |_| |_| |_|\___|    /_/   \_\_|_|\__, |_| |_|_| |_| |_|\___|_| |_|\__|          \n"
-alignment += "                                                              |___/                                          \n\n\n"
+alignment += "                                                              |___/                                          \n"
 
+aligned1 = "                                  " + align1  
+aligned2 = "                                  " + align2 + '\n\n' 
 
 print(dotPlot)
 print(sumMatrix)
 print(alignment)
+print(aligned1)
+print(aligned2)
 
 responseCorrect = False
 while not responseCorrect:
