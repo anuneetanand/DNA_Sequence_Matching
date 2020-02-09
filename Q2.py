@@ -11,7 +11,18 @@ Divyam Gupta         : 2018032
 
 import sys
 
-I = open(sys.argv[1],"r")
+argv = sys.argv
+
+inputFile = ''
+outputFile = ''
+
+for i in range(len(argv)):
+    if argv[i] == '-i':
+        inputFile = argv[i+1]
+    elif argv[i] == '-o':
+        outputFile = argv[i+1]
+
+I = open(inputFile,"r")
 Data = I.readlines()
 I.close()
 
@@ -49,5 +60,5 @@ print(HEADER)
 print(TITLE)
 print(RESOLUTION)
 
-O = open(sys.argv[2],"w")
+O = open(outputFile,"w")
 O.write(HEADER + "\n" + TITLE + "\n" + RESOLUTION + "\n")
