@@ -63,10 +63,8 @@ DP = copy.deepcopy(DM)
 R_max = L1
 C_max = L2
 
-Tuples = [[j for j in range(L2)] for i in range(L1)]
-Max_Value = 0
+Tuples = [[(i,j) for j in range(L2)] for i in range(L1)]
 End_Value = 0
-Max_Tuple = (0,0)
 End_Tuple = (0,0)
 
 for R in range(L1-1,-1,-1):
@@ -80,13 +78,15 @@ for R in range(L1-1,-1,-1):
          Max_Tuple = (R+1,C+1)
 
       if (R+1<R_max) and (C+2<C_max):
-         for k in range(C+2,C_max):
-            v2 = DP[R+1][k]
-            if v2>v1:
-               Max_Value = v2
-               Max_Tuple = (R+1,k)
+            temp = (R+1,C+2)
+            for k in range(C+2,C_max):
+               v2 = DP[R+1][k]
+               if v2>v1:
+                  Max_Value = v2
+                  Max_Tuple = (R+1,k)
 
       if (R+2<R_max) and (C+2<C_max):
+         temp = (R+2,C+1)
          for k in range(R+2,R_max):
             v3 = DP[k][C+1]
             if v3>v2 and v3>v1:
@@ -103,9 +103,8 @@ x,y = End_Tuple[0],End_Tuple[1]
 Trace_Back = [(x,y)]
 while ((x<L1-1) and (y<L2-1)):
    Trace_Back.append(Tuples[x][y])
-   x,y = Tuples[x][y]
-
-print(Tuples)
+   x,y = Tuples[x][y][0],Tuples[x][y][1]
+print(Trace_Back)
 # Generating Output
 
 Dot_Plot = ""
@@ -168,6 +167,45 @@ Alignment += "                                 /_/   \_\_|_|\__, |_| |_|_| |_| |
 Alignment += "                                               |___/                                          \n\n\n"
 
 
+
+x = 0
+y = 0
+
+str1 = ""
+str2 = ""
+while(len(Trace_Back)>0):
+   tempTup = Trace_Back.pop(0)
+   print(str(tempTup[0])+","+str(tempTup[1]))
+   while (x<(tempTup[0]) or y<(tempTup[1])):
+      if (x<tempTup[0]):
+         str1 += First[x]
+         x+=1
+      else:
+         str1 += "-"
+
+      if (y<tempTup[1]):
+         str2+= Second[y]
+         y+=1
+      else:
+         str2+="-"
+
+while ((x<len(First)) or (y<len(Second))):
+   if (x<len(First)):
+      str1+=First[x]
+      x+=1
+   else:
+      str1+="-"
+
+   if(y<len(Second)):
+      str2+=Second[y]
+      y+=1
+   else:
+      str2+="-"
+
+
+Alignment += str1 + "\n"
+Alignment += str2 + "\n"
+Alignment+="\n"
 #print(Dot_Plot)
-#print(Sum_Matrix)
-#print(Alignment)
+print(Sum_Matrix)
+print(Alignment)
