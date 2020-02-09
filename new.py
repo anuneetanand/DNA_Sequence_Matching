@@ -30,8 +30,8 @@ for Line in Data:
 
 First = Sequences[0]
 Second = Sequences[1]
-#First = "AYCYNRCKCRBP" #[example in slides]
-#Second = "ABCNYRQCLCRPM" #[example in slides]
+First = "AYCYNRCKCRBP" #[example in slides]
+Second = "ABCNYRQCLCRPM" #[example in slides]
 
 L1 = len(First)
 L2 = len(Second)
@@ -63,91 +63,49 @@ DP = copy.deepcopy(DM)
 R_max = L1
 C_max = L2
 
-Tuples = []
-for i in range(L1):
-   P = []
-   for j in range(L2):
-      P.append((i,j))
-   Tuples.append(P)
-
-Max_Tuple = (0,0)
+Tuples = [[j for j in range(L2)] for i in range(L1)]
 Max_Value = 0
+End_Value = 0
+Max_Tuple = (0,0)
+End_Tuple = (0,0)
 
 for R in range(L1-1,-1,-1):
    for C in range(L2-1,-1,-1):
-      v1 = 0
-      v2 = 0
-      v3 = 0
-      T = (R,C)
-      Cur_Max = 0
-      
-      if ( (R+1 < R_max) and (C+1 < C_max) ):
+      v1 = v2 = v3 = 0
+      Max_Tuple = (R,C)
+      Max_Value = 0
+      if (R+1<R_max) and (C+1<C_max):
          v1 = DP[R+1][C+1]
-         T = (R+1,C+1)
-         Cur_Max = v1
-      
-      if ( (R+1 < R_max) and (C+2 < C_max) ):
-         temp = (R+1,C+2)         
+         Max_Value = v1
+         Max_Tuple = (R+1,C+1)
+
+      if (R+1<R_max) and (C+2<C_max):
          for k in range(C+2,C_max):
-            v2 = max(v2,DP[R+1][k])
-            if (v2<DP[R+1][k]):
-               temp = (R+1,k)
+            v2 = DP[R+1][k]
+            if v2>v1:
+               Max_Value = v2
+               Max_Tuple = (R+1,k)
 
-         if (v2>v1):
-            T = temp
-            Cur_Max = v2
-
-      if ( (R+2 < R_max) and (C+2 < C_max) ):         
-         temp = (R+2,C+1)
+      if (R+2<R_max) and (C+2<C_max):
          for k in range(R+2,R_max):
-            v3 = max(v3,DP[k][C+1]) 
-            if(v3 < DP[k][C+1]):
-               temp = (k,C+1)
+            v3 = DP[k][C+1]
+            if v3>v2 and v3>v1:
+               Max_Value = v3
+               Max_Tuple = (k,C+1)
 
-         if (v3>max(v1,v2)):
-            T = temp
-            Cur_Max = v3
-
-      DP[R][C] += max(v1,v2,v3)
-      Tuples[R][C] = T
+      DP[R][C] += Max_Value
+      Tuples[R][C] = Max_Tuple
       if (Max_Value < DP[R][C]):
-         Max_Value_At = (R,C)
-         Max_Value = DP[R][C]
+         End_Value = DP[R][C]
+         End_Tuple = (R,C)
 
-Seq_1 = ""
-Seq_2 = ""
-
-x,y = Max_Value_At[0], Max_Value_At[1]
+x,y = End_Tuple[0],End_Tuple[1]
 Trace_Back = [(x,y)]
-while ((x<(L1-1)) and ((y<L2-1))):
-   Temp_Tuple = Tuples[x][y]
-   Trace_Back.append(Temp_Tuple)
-   x = Temp_Tuple[0]
-   y = Temp_Tuple[1]
+while ((x<L1-1) and (y<L2-1)):
+   Trace_Back.append(Tuples[x][y])
+   x,y = Tuples[x][y]
 
-#print(Trace_Back)
-
-i = 0
-j = 0
-F = list(First)
-S = list(Second)
-
-while len(Trace_Back)>0:
-   T = Trace_Back.pop(0)
-   if j==T[1]:
-      Seq_1 += F.pop(0)
-   else:
-      Seq_1 += "_" * (T[1]-j)
-      j = T[1]
-   if i==T[0]:
-      Seq_2 += S.pop(0)
-   else:
-      Seq_2 += "_" * (T[0]-i)
-      i = T[0]
-   i +=1
-   j +=1
-
-
+print(Tuples)
 # Generating Output
 
 Dot_Plot = ""
@@ -210,6 +168,6 @@ Alignment += "                                 /_/   \_\_|_|\__, |_| |_|_| |_| |
 Alignment += "                                               |___/                                          \n\n\n"
 
 
-print(Dot_Plot)
-print(Sum_Matrix)
-print(Alignment)
+#print(Dot_Plot)
+#print(Sum_Matrix)
+#print(Alignment)
