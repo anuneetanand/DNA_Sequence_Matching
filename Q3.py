@@ -27,6 +27,15 @@ for i in Lines:
 first = sequences[0]
 second = sequences[1]
 
+#first = "MAPWMHLLTVLALLALWGPNSVQAYSSQHLCGSNLVEALYMTCGRSGFYRPHDRRELEDL"
+#second = "MALLVHFLPLLALLALWEPKPTQAFVKQHLCGPHLVEALYLVCGERGFFYTPKSRREVED"
+
+#first = "rADITYA"
+#second = "ADITYA"
+
+first = "AYCYNRCKCRBP" #[example in slides]
+second ="ABCNYRQCLCRPM"
+
 opt = numpy.zeros([len(first), len(second)], dtype = int)
 
 
@@ -80,6 +89,16 @@ v2 = cell(R+1,C+2 to C_max)
 v3 = cell(R+2 to R_max,C+2)
 """
 
+tuples = []
+
+for i in range(len(first)):
+   l = []
+   for j in range(len(second)):
+      l.append((i,j))
+   tuples.append(l)
+maxTup = (0,0)
+maxValue = 0
+
 C_max = len(second)
 R_max = len(first)
 
@@ -90,61 +109,39 @@ for i in range(len(first)-1,-1,-1):
       v1 = 0
       v2 = 0
       v3 = 0
+      tup = (R,C)
+      curMax = 0
       if ((R+1<R_max) and (C+1<C_max)):
          v1 = opt[R+1][C+1]
+         tup = (R+1,C+1)
+         curMax = v1
       if ((R+1<R_max) and (C+2<C_max)):
          temp = (R+1,C+2)         
          for k in range(C+2,C_max):
             v2 = max(v2,opt[R+1][k])
+            if (v2<opt[R+1][k]):
+               temp = (R+1,k)
+
+         if (v2>v1):
+            tup = temp
+            curMax = v2
 
       if ((R+2<R_max) and (C+2<C_max)):         
          temp = (R+2,C+1)
          for k in range(R+2,R_max):
-            v3 = max(v3,opt[k][C+1])             
+            v3 = max(v3,opt[k][C+1]) 
+            if(v3 < opt[k][C+1]):
+               temp = (k,C+1)
+
+         if (v3>max(v1,v2)):
+            tup = temp
+            curMax = v3
       opt[R][C] += max(v1,v2,v3)
-      
-r = len(first) -1
-c = len(second) -1
-i1 = len(first) - 1
-i2 = len(second) - 1
-align1 = ''
-align2 = ''
-
-while r>=1 and c>=1:
-   neighbourhood = [opt[r-1][c-1], opt[r-1][c], opt[r][c-1]]
-   maxReq = max(neighbourhood)
-   if(opt[r-1][c-1] == maxReq):
-      align1 = first[i1] + align1
-      align2 = second[i2] + align2
-      r-=1
-      c-=1
-      i1-=1
-      i2-=1
-      continue
-   elif(opt[r][c-1] == maxReq):
-      align1 = '-' + align1
-      align2 = second[i2] + align2
-      i2-=1
-      c-=1
-      continue
-   else:
-      align2 = '-' + align2
-      align1 = first[i1] + align1
-      i1-=1
-      r-=1
-
-if(r==1):
-   align1 = '-' + align1
-   align2 = second[i2] + align2
-if(c==1):
-   align2 = '-' + align2
-   align1 = first[i1] + align1
-
-if(i1>=0):
-   align1 = first[:i1+1] + align1
-if(i2>=0):
-   align2 = second[:i2+1] + align2
-
+      tuples[R][C] = tup
+      if (maxValue < opt[R][C]):
+         maxValueAt = (R,C)
+         maxValue = opt[R][C]
+         
 
 sumMatrix = ""
 sumMatrix += "                            _____ _               ____                  __  __       _        _                \n"
@@ -177,17 +174,65 @@ alignment += "                           |_   _| |__   ___        / \  | (_) __ 
 alignment += "                             | | | '_ \ / _ \_____ / _ \ | | |/ _` | '_ \| '_ ` _ \ / _ \ '_ \| __|          \n"
 alignment += "                             | | | | | |  __/_____/ ___ \| | | (_| | | | | | | | | |  __/ | | | |_           \n"
 alignment += "                             |_| |_| |_|\___|    /_/   \_\_|_|\__, |_| |_|_| |_| |_|\___|_| |_|\__|          \n"
-alignment += "                                                              |___/                                          \n"
+alignment += "                                                              |___/                                          \n\n\n"
 
-aligned1 = "                                  " + align1  
-aligned2 = "                                  " + align2 + '\n\n' 
+
+
+x,y = maxValueAt[0],maxValueAt[1]
+traceBack = [(x,y)]
+while ((x<(len(first)-1)) and ((y<len(second)-1))):
+   tempTuple = tuples[x][y]
+   traceBack.append(tempTuple)
+   x = tempTuple[0]
+   y = tempTuple[1]
+
+
+x = 0
+y = 0
+
+str1 = ""
+str2 = ""
+
+while(len(traceBack)>0):
+   tempTup = traceBack.pop(0)
+   print(str(tempTup[0])+","+str(tempTup[1]))
+   while (x<(tempTup[0]) or y<(tempTup[1])):
+      if (x<tempTup[0]):
+         str1 += first[x]
+         x+=1
+      else:
+         str1 += "-"
+
+      if (y<tempTup[1]):
+         str2+= second[y]
+         y+=1
+      else:
+         str2+="-"
+
+while ((x<len(first)) or (y<len(second))):
+   if (x<len(first)):
+      str1+=first[x]
+      x+=1
+   else:
+      str1+="-"
+
+   if(y<len(second)):
+      str2+=second[y]
+      y+=1
+   else:
+      str2+="-"
+
+
+alignment += str1 + "\n"
+alignment += str2 + "\n"
+
+alignment+="\n"
 
 print(dotPlot)
 print(sumMatrix)
 print(alignment)
-print(aligned1)
-print(aligned2)
-
+print("Length of first = "+str(len(first)))
+print("Length of second = "+str(len(second)))
 responseCorrect = False
 while not responseCorrect:
    print("Do you want image of the dot plot ? (y or n)")
