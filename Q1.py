@@ -52,4 +52,4 @@ for i in range(0,len(RNA),3):
 print("Protein Sequence:",PS)
 
 O = open(sys.argv[2],"w")
-O.write(PS)
+O.write(PS + "\n")
