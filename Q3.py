@@ -1,13 +1,9 @@
+
 # -*- coding: utf-8 -*-
 """
-    IQB , Winter 2020
-      Assignment-1
-      Question-3
-
 Aditya Singh Rathore : 2018007
 Anuneet Anand        : 2018022
 Divyam Gupta         : 2018032
-
 """
 
 print("   ___   ___ _____ ")
@@ -33,7 +29,6 @@ second = sequences[1]
 
 opt = numpy.zeros([len(first), len(second)], dtype = int)
 
-points = []
 
 for i in range(len(first)):
    for j in range(len(second)):
@@ -83,8 +78,8 @@ where
 v1 = cell(R+1,C+1)
 v2 = cell(R+1,C+2 to C_max)
 v3 = cell(R+2 to R_max,C+2)
-
 """
+
 C_max = len(second)
 R_max = len(first)
 
@@ -95,19 +90,17 @@ for i in range(len(first)-1,-1,-1):
       v1 = 0
       v2 = 0
       v3 = 0
-
       if ((R+1<R_max) and (C+1<C_max)):
          v1 = opt[R+1][C+1]
-
       if ((R+1<R_max) and (C+2<C_max)):
-         
+         temp = (R+1,C+2)         
          for k in range(C+2,C_max):
             v2 = max(v2,opt[R+1][k])
-      
-      if ((R+2<R_max) and (C+2<C_max)):         
-         for k in range(R+2,R_max):
-            v3 = max(v3,opt[k][C+1]) 
 
+      if ((R+2<R_max) and (C+2<C_max)):         
+         temp = (R+2,C+1)
+         for k in range(R+2,R_max):
+            v3 = max(v3,opt[k][C+1])             
       opt[R][C] += max(v1,v2,v3)
       
 r = len(first) -1
@@ -177,7 +170,6 @@ for i in range(len(first)):
 sumMatrix += "\n\n\n"
 
 #The Alignment
-
 
 alignment = ""
 alignment += "                            _____ _                  _    _ _                                  _             \n"
