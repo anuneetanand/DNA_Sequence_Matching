@@ -12,14 +12,14 @@ Divyam Gupta         : 2018032
 import sys
 
 inputFile = "1ifp.pdb"
-outputFile = "Output.txt"
+outputFile = "Q2_out.txt"
 
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
     if sys.argv[i] == '-o':
         outputFile = sys.argv[i+1]
-
+print("READING FROM this file->"+str(inputFile))
 I = open(inputFile,"r")
 Data = I.readlines()
 I.close()
@@ -57,6 +57,6 @@ RESOLUTION = "RESOLUTION: " + RESOLUTION
 print(HEADER)
 print(TITLE)
 print(RESOLUTION)
-
+print("OUTPUT DUMPED IN this file->"+str(outputFile))
 O = open(outputFile,"w")
 O.write(HEADER + "\n" + TITLE + "\n" + RESOLUTION + "\n")
