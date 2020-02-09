@@ -15,7 +15,7 @@ import copy
 import sys
 
 inputFile = "protein.fa" #Default File expected
-outputFile = "q3.out" #Default output File
+outputFile = "Q3_OUT.txt" #Default output File
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
