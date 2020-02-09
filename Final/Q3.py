@@ -14,6 +14,8 @@ import numpy
 import copy
 import sys
 
+inputFile = "protein.fa"
+
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
@@ -213,3 +215,4 @@ outputPtr = open(outputFile, 'w')
 outputPtr.write(Alignment)
 outputPtr.close()
 I.close()
+plt.show()
