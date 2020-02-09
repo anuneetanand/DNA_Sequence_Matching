@@ -10,6 +10,9 @@ Divyam Gupta         : 2018032
 """
 import sys
 
+inputFile = "DNA.fa"
+outputFile = "PS.fa"
+
 X = { 
         'AUA':'I', 'AUC':'I', 'AUU':'I', 'AUG':'M', 
         'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACU':'T', 
@@ -32,7 +35,7 @@ X = {
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
-    elif sys.argv[i] == '-o':
+    if sys.argv[i] == '-o':
         outputFile = sys.argv[i+1]
 
 I = open(inputFile,"r")
@@ -40,9 +43,15 @@ Data = I.readlines()
 I.close()
 
 DNA = ""
+Header = ""
 for Line in Data:
-	if Line[0]!=">":
-		DNA = DNA + Line
+    if Line[0]!=">":
+        DNA = DNA + Line
+    else:
+        Header = Header + Line
+
+Header = Header.replace("\n","")
+print("\nHeader :",Header)
 
 DNA = DNA.replace("\n","")
 print("\nDNA :",DNA)
@@ -58,4 +67,5 @@ for i in range(0,len(RNA),3):
 print("\nProtein Sequence :",PS,"\n")
 
 O = open(outputFile,"w")
+O.write(Header+"\n")
 O.write(PS + "\n")

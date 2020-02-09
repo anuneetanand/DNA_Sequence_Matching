@@ -14,6 +14,8 @@ import numpy
 import copy
 import sys
 
+inputFile = "protein.fa"
+
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
         inputFile = sys.argv[i+1]
@@ -73,6 +75,8 @@ for R in range(L1-1,-1,-1):
       v1 = v2 = v3 = 0
       Max_Tuple = (R,C)
       Max_Value = 0
+      R = R-1
+      C = max(C-1,0)
       if (R+1<R_max) and (C+1<C_max):
          v1 = DP[R+1][C+1]
          Max_Value = v1
@@ -208,4 +212,4 @@ Alignment+="\n"
 print(Dot_Plot)
 print(Sum_Matrix)
 print(Alignment)
-#plt.show()
+plt.show()
