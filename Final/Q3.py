@@ -208,4 +208,8 @@ Alignment+="\n"
 print(Dot_Plot)
 print(Sum_Matrix)
 print(Alignment)
-#plt.show()
+
+outputPtr = open(outputFile, 'w')
+outputPtr.write(Alignment)
+outputPtr.close()
+I.close()
