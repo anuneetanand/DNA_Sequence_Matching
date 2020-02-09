@@ -22,6 +22,7 @@ for i in range(len(sys.argv)):
     elif sys.argv[i] == '-o':
         outputFile = sys.argv[i+1]
 
+print("READING FROM this file ->" + str(inputFile))
 I = open(inputFile, 'r')
 Data = I.readlines()
 Sequences = [] 
