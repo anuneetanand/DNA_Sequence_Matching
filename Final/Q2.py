@@ -6,13 +6,12 @@
 Aditya Singh Rathore : 2018007
 Anuneet Anand        : 2018022
 Divyam Gupta         : 2018032
-
 """
 
 import sys
 
 inputFile = "1ifp.pdb"
-outputFile = "Output.txt"
+outputFile = "O2.txt"
 
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':

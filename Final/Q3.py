@@ -7,14 +7,15 @@
 Aditya Singh Rathore : 2018007
 Anuneet Anand        : 2018022
 Divyam Gupta         : 2018032
-
 """
+
 import matplotlib.pyplot as plt
 import numpy
 import copy
 import sys
 
 inputFile = "protein.fa"
+outputFile = "O3.txt"
 
 for i in range(len(sys.argv)):
     if sys.argv[i] == '-i':
@@ -26,6 +27,7 @@ I = open(inputFile, 'r')
 Data = I.readlines()
 Sequences = [] 
 
+# Reading Sequences
 for Line in Data:
    if (len(Line) > 2 and Line[0] != ">"):
       Sequences.append(Line[0:len(Line)-1])
@@ -35,17 +37,18 @@ Second = Sequences[1]
 #First = "AYCYNRCKCRBP" #[example in slides]
 #Second = "ABCNYRQCLCRPM" #[example in slides]
 
-
 L1 = len(First)
 L2 = len(Second)
 
 DM = numpy.zeros([L1, L2], dtype = int)
 
+# Calculating Identity Scores
 for i in range(L1):
    for j in range(L2):
       if (First[i] == Second[j]):
          DM[i][j] = 1
 
+# Plotting The Dot-Plot
 Dot_PlotX = []
 Dot_PlotY = []
 for i in range(L1):
@@ -60,15 +63,18 @@ plt.xlabel("Sequence - 1")
 plt.ylabel("Sequence - 2")
 plt.xticks(numpy.arange(len(list(First))),list(First))
 plt.yticks(numpy.arange(len(list(Second))),list(Second))
-#plt.show()
+
 
 DP = copy.deepcopy(DM)
 R_max = L1
 C_max = L2
-
 Tuples = [[(i,j) for j in range(L2)] for i in range(L1)]
+Max_Value = 0
+Max_Tuple = (0,0)
 End_Value = 0
 End_Tuple = (0,0)
+
+# Needleman Wunsch Algorithm 
 
 for R in range(L1-1,-1,-1):
    for C in range(L2-1,-1,-1):
@@ -102,12 +108,14 @@ for R in range(L1-1,-1,-1):
          End_Value = DP[R][C]
          End_Tuple = (R,C)
 
+# Tracing Back
 x,y = End_Tuple[0],End_Tuple[1]
 Trace_Back = [(x,y)]
 while ((x<L1-1) and (y<L2-1)):
    Trace_Back.append(Tuples[x][y])
    x,y = Tuples[x][y][0],Tuples[x][y][1]
-print(Trace_Back)
+#print(Trace_Back)
+
 # Generating Output
 
 Dot_Plot = ""
@@ -169,6 +177,7 @@ Alignment += "                                  / ___ \| | | (_| | | | | | | | |
 Alignment += "                                 /_/   \_\_|_|\__, |_| |_|_| |_| |_|\___|_| |_|\__|          \n"
 Alignment += "                                               |___/                                          \n\n\n"
 
+# Alignment Of Sequences
 x = 0
 y = 0
 Seq1 = ""
@@ -206,8 +215,16 @@ Alignment += Seq1 + "\n"
 Alignment += Seq2 + "\n"
 Alignment+="\n"
 
+# Writing To Output File
+O = open(outputFile,"w")
+O.write(Dot_Plot)
+O.write(Sum_Matrix)
+O.write("Score: "+str(End_Value)+"\n\n")
+O.write(Alignment)
 
+# Printing On Terminal
 print(Dot_Plot)
 print(Sum_Matrix)
+print("Score: ",End_Value,"\n\n")
 print(Alignment)
 plt.show()
