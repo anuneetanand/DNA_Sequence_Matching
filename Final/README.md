@@ -6,9 +6,14 @@ Assignment 1 Of IQB
 
 All scripts run with the standard command : `python Qx.py -i __inputFile__ -o __outputFile__`
 
+
 # Question-1
 
+For this question, we simply maintain a dictionary of all proteins corresponding to a given sequence of RNA residues. The final output is the protein sequence derived from the RNA sequence. The RNA sequence is built by replacing all the T's by U's in the given file.
 
+# Question-2
+
+For this question, we open the input file, split it line-wise and perform linear serach on all the lines obatined. If the line contains 'HEADER', we extract the header directly. The same goes for TITLE. For the resolution, as specified by the PDB format, it is always found in REMARK 2. Thus, it is also extracted easily.
 
 # Question-3
 
