@@ -45,4 +45,6 @@ Computations on DNA Sequences.
 ```
 python Qx.py -i __inputFile__ -o __outputFile__
 ```
-
+## Collaborators
+[Aditya Singh Rathore](https://github.com/aditya18007)   
+[Divyam Gupta](https://github.com/dgupta04)
