@@ -1,5 +1,4 @@
 # Quantitative Biology :health_worker:
-Assignments in the domain of Quantitative_Biology.
 
 ## Folder Structure
 ```
